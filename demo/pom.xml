@@ -114,10 +114,14 @@
             <version>2.7.3</version>
         </dependency>
         <dependency>
-            <groupId>IKAnalyzer2012FF_u1</groupId>
-            <artifactId>IKAnalyzer2012FF_u1</artifactId>
-            <version>0.1</version>
+            <groupId>org.welta.analyzer</groupId>
+            <artifactId>ikanalyzer</artifactId>
+            <version>2012</version>
+            <scope>system</scope>
+            <!--本地jar的路径,相对或者绝对都可以-->
+            <systemPath>${project.basedir}/lib/IKAnalyzer2012FF_u1.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -243,10 +247,11 @@
         </dependency>
 
 
+
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>3.3.3</version>
+            <version>3.4.8</version>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>io.netty</groupId>-->

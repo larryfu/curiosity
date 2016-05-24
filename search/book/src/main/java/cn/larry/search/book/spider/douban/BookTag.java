@@ -8,6 +8,10 @@ public class BookTag {
     public String superTag;
     public String tag;
 
+    public BookTag() {
+
+    }
+
     public BookTag(String href, String superTag, String tag) {
         this.href = href;
         this.superTag = superTag;

@@ -27,7 +27,7 @@ public class IKSpliter {
 	public static String[] splitNews(String newstext){
 		try {
 			List<String> wordsList =new ArrayList<String>();
-			Analyzer anal=new IKAnalyzer(true);       
+			Analyzer anal=new IKAnalyzer(false);
 	        StringReader reader=new StringReader(newstext);  
 	        //分词 
 	         TokenStream ts = anal.tokenStream("", reader);

@@ -47,12 +47,10 @@ public class Trie<E> {
 	
 	private int size(Node x){
 		if(x == null) return 0;
-		
 		int cnt = 0;
 		if(x.val != null) cnt++;
 		for(char c =0 ; c<R ;c++)
 			cnt += size(x.next[c]);
-		
 		return cnt;
 	}
 	

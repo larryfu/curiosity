@@ -1,4 +1,4 @@
-package cn.larry.analyzer;
+package cn.larry.news;
 
 import cn.larry.util.MD5Util;
 

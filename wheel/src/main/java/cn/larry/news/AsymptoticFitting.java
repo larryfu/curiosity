@@ -1,4 +1,4 @@
-package cn.larry.analyzer;
+package cn.larry.news;
 
 import org.apache.commons.lang3.RandomUtils;
 

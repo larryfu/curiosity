@@ -1,4 +1,4 @@
-package cn.larry.analyzer;
+package cn.larry.news;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -46,9 +46,21 @@ public class RegexUtils {
     public static List<String> getMatch(String regex, String content) {
         Matcher matcher = Pattern.compile(regex).matcher(content);
         List<String> result = new ArrayList<>();
+
         while (matcher.find())
             result.add(matcher.group());
         return result;
+    }
+
+    public static void main(String[] args) {
+        String str = "/home/larry/2012/11";
+        String regex = "(/\\w+)(/\\w+)";
+        Matcher matcher = Pattern.compile(regex).matcher(str);
+        while (matcher.find()){
+            System.out.println(matcher.group());
+            System.out.println(matcher.group(1));
+            System.out.println(matcher.group(2));
+        }
     }
 
     public static String getFirstMatch(String regex, String content) {

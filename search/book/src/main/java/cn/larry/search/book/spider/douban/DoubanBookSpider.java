@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 public class DoubanBookSpider {
 
-    public static final String BOOK_HOME = "https://book.douban.com/tag/";
+    public static final String BOOK_HOME = "https://Book.douban.com/tag/";
 
-    public static final String DOUBAN_HOME = "https://book.douban.com";
+    public static final String DOUBAN_HOME = "https://Book.douban.com";
 
     private HttpAgent agent = new HttpAgent();
 

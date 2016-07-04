@@ -16,8 +16,17 @@ public class Book {
     private double price;
     private String press;
     private int pressTime;
+    private String category;
 
     private String detailHref;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public int getPressTime() {
         return pressTime;

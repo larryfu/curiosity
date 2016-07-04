@@ -5,21 +5,17 @@ import cn.larry.commons.util.RegexUtils;
 import cn.larry.search.book.bean.Book;
 import cn.larry.search.book.bean.BookData;
 import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
 
 
-import javax.swing.text.DateFormatter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -30,22 +26,39 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 /**
  * Created by larryfu on 16-6-7.
  */
-public class TransferDate {
+public class TransferData {
 
     private static final Gson gson = new Gson();
 
+    private static final Random random = new Random();
+
     public static void main(String[] args) throws IOException {
         Path path = Paths.get("/home/larryfu/books/文学.json");
-        List<Book> books = new TransferDate().getBookFromFile(path);
+        List<Book> books = new TransferData().getBookFromFile(path);
         System.out.println();
+    }
+
+    public List<Book> getBooksFromDir(String dir) throws IOException {
+        List<Book> books = new ArrayList<>();
+        Files.list(Paths.get(dir)).forEach(file -> {
+            try {
+                books.addAll(getBookFromFile(file));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        return books;
     }
 
     private List<Book> getBookFromFile(Path path) throws IOException {
         List<String> lines = Files.readAllLines(path);
-        return lines.stream()
-                .map(TransferDate::fromJson).filter(d -> d != null)
-                .map(TransferDate::data2Book)
+        List<Book> books = lines.stream()
+                .map(TransferData::fromJson).filter(d -> d != null)
+                .map(TransferData::data2Book).filter(b -> b != null)
                 .collect(Collectors.toList());
+        String category = path.toFile().getName().split("\\.")[0];
+        books.forEach(b -> b.setCategory(category));
+        return books;
     }
 
     private static BookData fromJson(String s) {
@@ -59,9 +72,8 @@ public class TransferDate {
 
     private static Book data2Book(BookData data) {
         try {
-
-
             Book book = new Book();
+            book.setId(random.nextInt(Integer.MAX_VALUE));
             List<String> aus = new ArrayList<>();
             if (data.authors != null)
                 for (String au : data.authors)

@@ -8,16 +8,6 @@ import java.util.Map;
  */
 public class WordsTireSt {
 
-
-    public static void main(String[] args) {
-        WordsTireSt wordsTireSt = new WordsTireSt();
-        wordsTireSt.put("我们", "");
-        wordsTireSt.put("我爱你", "");
-        wordsTireSt.put("我们中国", "");
-        System.out.println(wordsTireSt.longestPrefixOf("我爱你中国人"));
-    }
-
-
     //   private static int R = Character.MAX_VALUE;
     private Node root;
 

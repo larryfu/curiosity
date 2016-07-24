@@ -30,11 +30,13 @@ public class Analyzer {
         Interval interval = getStart(intervals);
         List<List<Interval>> results = new ArrayList<>();
         List<Interval> start = getSameLevel(intervals, interval);
+        start = start.stream().filter(in -> in.getLower() == 0).collect(Collectors.toList());
         for (Interval in : start) {
             List<Interval> ins = new ArrayList<>();
             ins.add(in);
             generateCombination(results, ins, intervals);
         }
+        //  for(List<>)
         return results;
     }
 
@@ -51,6 +53,7 @@ public class Analyzer {
     private static void generateCombination(List<List<Interval>> total, List<Interval> current, List<Interval> origin) {
         Interval in1 = getNext(origin, current.get(current.size() - 1));
         if (in1 == null) {
+            current = supplement(current);
             total.add(current);
             return;
         }
@@ -62,17 +65,38 @@ public class Analyzer {
         }
     }
 
+    private static List<Interval> supplement(List<Interval> current) {
+        List<Interval> intervals = new ArrayList<>();
+        int currentIndex = 0;
+        int next = 0;
+        for (int i = 0; i < current.size(); i++) {
+            next = current.get(i).getLower();
+
+            if (next - currentIndex > 1) {
+                for (int j = currentIndex + 1; j < next; j++) {
+                    intervals.add(new Interval(j, j));
+                }
+            }
+            intervals.add(current.get(i));
+            currentIndex = current.get(i).getUpper();
+        }
+        return intervals;
+    }
+
     private static List<Interval> getSameLevel(List<Interval> intervals, Interval interval) {
-        return intervals.stream().filter(in -> in.getLower() >= interval.getLower() && interval.intersection(in) != null).collect(Collectors.toList());
+        return intervals.stream()
+                //  .filter(in -> in.getLower() == interval.getLower())
+                .filter(in -> in.getLower() >= interval.getLower() && interval.intersection(in) != null)
+                .collect(Collectors.toList());
     }
 
     private static Interval getNext(List<Interval> sorted, Interval base) {
-        Interval in = null;
+        Interval next = null;
         for (Interval interval : sorted)
             if (interval.getLower() > base.getUpper()) {
-                if (in == null || interval.getLower() < in.getLower() || interval.getLower() == in.getLower() && interval.length() < in.length())
-                    in = interval;
+                if (next == null || interval.getLower() < next.getLower() || interval.getLower() == next.getLower() && interval.length() < next.length())
+                    next = interval;
             }
-        return in;
+        return next;
     }
 }

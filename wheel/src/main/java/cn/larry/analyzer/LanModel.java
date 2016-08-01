@@ -81,9 +81,14 @@ public class LanModel {
         int combineFreq = getFrep(combine);
         int singleFrep = getFrep(start);
         int endFreq = getFrep(combine.trim().split("-")[1]);
+        int totalFreq = singleFrep + endFreq;
         int wordsSize = getFrep(WORD_NUM_KEY);
+        System.out.println(combine + ":" + combineFreq + ",total:" + totalFreq);
         //为避免出现概率为0的情况，将未出现的组合出现次数视为1，出现了的次数则视为原始的8倍
-        return (double) (combineFreq * 4 + 1) / (double) (singleFrep * 4 + wordsSize) * Math.sqrt(singleFrep + endFreq);
+        if (combineFreq == 0) {
+            return Math.sqrt(Math.sqrt(totalFreq)) / wordsSize;
+        }
+        return (double) (combineFreq * 4 + 1) / (double) (singleFrep * 4 + wordsSize);
     }
 
     public static double wordProbability(String word) {

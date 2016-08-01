@@ -49,7 +49,6 @@ public class MultiplexerTimeServer implements Runnable {
                 SocketChannel sc = ssc.accept();
                 sc.configureBlocking(false);
                 sc.register(selector, SelectionKey.OP_READ);
-
             }
             if (key.isReadable()) {
                 SocketChannel sc = (SocketChannel) key.channel();

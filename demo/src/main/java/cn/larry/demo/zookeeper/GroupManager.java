@@ -14,6 +14,11 @@ import java.util.List;
  */
 public class GroupManager extends ConnectionWatcher {
 
+    public void exists(String groupName){
+        String path = "/"+groupName;
+        zk.exists(path,this,null,null);
+    }
+
 
     public void create(String groupName) throws KeeperException, InterruptedException {
         String path = "/" + groupName;
@@ -46,6 +51,7 @@ public class GroupManager extends ConnectionWatcher {
             List<String> children = zk.getChildren(path, false);
             for (String child : children)
                 zk.delete(path + "/" + child, -1);
+            zk.delete(path,-1);
             children.forEach(System.out::println);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -53,6 +59,7 @@ public class GroupManager extends ConnectionWatcher {
             e.printStackTrace();
         }
     }
+
     public void write(String path, String value) throws KeeperException, InterruptedException {
         Stat stat = zk.exists(path, false);
         if (stat == null) {
@@ -65,14 +72,16 @@ public class GroupManager extends ConnectionWatcher {
     public static void main(String[] args) throws InterruptedException, IOException, KeeperException {
         GroupManager group = new GroupManager();
         group.connect("localhost");
-        // group.create("zoo");
-        group.join("zoo", "lion");
-        group.join("zoo", "tiger");
-        group.join("zoo", "panda");
-        group.list("zoo");
-        group.delete("lion");
-        group.list("zoo");
-        group.close();
+        group.exists("zoo");
+        group.create("zoo");
+//        group.create("zoo");
+//        group.join("zoo", "lion");
+//        group.join("zoo", "tiger");
+//        group.join("zoo", "panda");
+//        group.list("zoo");
+//        group.delete("zoo");
+//      //  group.close();
+//        group.list("zoo");
     }
 
 }

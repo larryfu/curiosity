@@ -8,7 +8,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by larryfu on 16-5-1.
  */
-public class ConnectionWatcher implements Watcher{
+public class ConnectionWatcher implements Watcher {
     private static final int SESSION_TIMEOUT = 5000;
     protected ZooKeeper zk;
     private CountDownLatch connectedSignal = new CountDownLatch(1);
@@ -23,12 +23,14 @@ public class ConnectionWatcher implements Watcher{
     public void process(WatchedEvent watchedEvent) {
         if (watchedEvent.getState() == Event.KeeperState.SyncConnected)
             connectedSignal.countDown();
+        if (watchedEvent.getType() == Event.EventType.NodeCreated) {
+            System.out.println("node created");
+        }
     }
 
     public void close() throws InterruptedException {
         zk.close();
     }
-
 
 
 }

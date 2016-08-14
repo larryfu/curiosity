@@ -9,3 +9,5 @@ target
 out
 gen
 # Created by .ignore support plugin (hsz.mobi)
+search/extracter/src/main/resources/
+search/extracter/src/test/

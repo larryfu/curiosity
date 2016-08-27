@@ -1,18 +1,19 @@
-package cn.larry.nio;
+package cn.larry.demo.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+import java.net.InetSocketAddress;
+
 /**
- * Created by larryfu on 16-2-14.
+ * Created by larry on 16-8-27.
  */
-public class NettyTimeServer {
+public class EchoServer {
 
     public void bind(int port) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -21,26 +22,25 @@ public class NettyTimeServer {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .option(ChannelOption.SO_BACKLOG, 1024)
-                    .childHandler(new ChildChannerHandler());
-            ChannelFuture f = b.bind(port).sync();
+                    .localAddress(new InetSocketAddress(port))
+                    .childHandler(new ChildChannelHandler());
+            ChannelFuture f = b.bind().sync();
             f.channel().closeFuture().sync();
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
 
     }
 
-    private class ChildChannerHandler extends ChannelInitializer<SocketChannel>{
-
+    private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
-            socketChannel.pipeline().addLast(new NettyTimeServerHandler());
+            socketChannel.pipeline().addLast(new EchoServerHandler());
         }
     }
 
     public static void main(String[] args) throws Exception {
-        new NettyTimeServer().bind(8080);
+        new EchoServer().bind(8080);
     }
 }

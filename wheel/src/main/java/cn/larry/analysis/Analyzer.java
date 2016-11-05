@@ -34,8 +34,6 @@ public class Analyzer {
 
     public static void main(String[] args) throws IOException {
         init();
-
-
         String s = Jsoup.parse(new URL("http://www.zhihu.com/question/46582590"), 3000).text();
         IKSpliter.splitNews(s);
         anlay(s);

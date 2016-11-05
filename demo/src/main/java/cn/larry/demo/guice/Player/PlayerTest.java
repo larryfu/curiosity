@@ -24,8 +24,6 @@ public class PlayerTest {
     public static void main(String[] args) {
         PlayerModule module = new PlayerModule();
         Injector injector =Guice.createInjector(new Module[]{module});
-
-
 //        @Good
 //        Player player = injector.getInstance(Player.class);
 //        System.out.println(player);

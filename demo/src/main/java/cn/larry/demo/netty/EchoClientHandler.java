@@ -26,6 +26,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     public void exceptionCaught(ChannelHandlerContext context, Throwable throwable) {
        // context.pipeline().close();
+
         throwable.printStackTrace();
         context.close();
     }

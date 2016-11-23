@@ -59,7 +59,8 @@ public class getTopWords {
         List<String> strings = entries.stream().map(e -> e.getKey() + " " + e.getValue()).collect(Collectors.toList());
 
 
-        //  strings = strings.stream().filter(s -> s.matches("[\u4e00-\u9fa5]+")).collect(Collectors.toList());
+        //  s
+        // trings = strings.stream().filter(s -> s.matches("[\u4e00-\u9fa5]+")).collect(Collectors.toList());
 
 
         String store = "/opt/data/rawcorpus/wordssummary.txt";

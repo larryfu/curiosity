@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class SinaNewsExtracter {
     }
 
     public static void main(String[] args) throws IOException {
-        String basePath = "/opt/data/webpages/sina";
+        String basePath = "/opt/data/webpages/sina/blog.sina.com.cn";
         Files.walkFileTree(Paths.get(basePath), new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
@@ -58,7 +59,7 @@ public class SinaNewsExtracter {
 
     private static String extractContent(Path file) {
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file.toFile()), "gbk"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file.toFile()), StandardCharsets.UTF_8));
             String html = String.join("\n", br.lines().collect(Collectors.toList()));
             Document document = Jsoup.parse(html);
             Map<String, String> map = new HashMap<>();
@@ -79,8 +80,8 @@ public class SinaNewsExtracter {
             map.put("title", document.title());
             Gson gson = new Gson();
             return gson.toJson(map);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

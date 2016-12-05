@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +33,13 @@ public class Analyzer {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        String str = "后来";
+        System.out.println(str);
+        System.out.println(Charset.defaultCharset());
+    }
+
+    public static void mains(String[] args) throws IOException {
         init();
         String s = Jsoup.parse(new URL("http://www.zhihu.com/question/46582590"), 3000).text();
         IKSpliter.splitNews(s);

@@ -8,14 +8,17 @@ import java.util.List;
  * Created by Thinkpad on 2015/12/6.
  */
 public class Digraph {
-    private final int V;  //顶点总数
+    private int V;  //顶点总数
     private int E;         //边总数
     private List<Integer>[] adj; //以顶点为下标的边的邻接表
+
+    public Digraph() {
+    }
 
     public Digraph(int V) {
         this.V = V;
         this.E = 0;
-        adj =new ArrayList[V];
+        adj = new ArrayList[V];
         for (int v = 0; v < V; v++)
             adj[v] = new ArrayList<>();
     }
@@ -39,6 +42,7 @@ public class Digraph {
 
     /**
      * 翻转有向图
+     *
      * @return
      */
     public Digraph reverse() {

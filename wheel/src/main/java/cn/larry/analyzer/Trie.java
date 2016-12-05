@@ -13,6 +13,7 @@ public class Trie {
         private Map<Character, Node> next = new HashMap<>();
     }
 
+
     public void put(String key, String val) {
         root = put(root, key, 0, val);
     }

@@ -36,6 +36,7 @@ public class Analyzer {
     public static void main(String[] args) {
         String str = "后来";
         System.out.println(str);
+
         System.out.println(Charset.defaultCharset());
     }
 

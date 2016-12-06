@@ -2,10 +2,9 @@ package cn.larry.datawash;
 
 import cn.larry.graph.Digraph;
 import cn.larry.graph.DirectedDFS;
-import cn.larry.sample.compress.Trie;
+import cn.larry.analyzer.Trie;
 import com.google.gson.Gson;
 
-import javax.print.DocFlavor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,31 +21,34 @@ import java.util.stream.Collectors;
  */
 public class AdderessAnalyzer {
     public static Map<Integer, String> genNumberMap() throws IOException {
-        String path = "/home/larry/nlp/xzqh-simple.json";
-        BufferedReader br = Files.newBufferedReader(Paths.get(path));
-        List<String> stringList = br.lines().collect(Collectors.toList());
-        String s = String.join(" ", stringList);
-        Pattern pattern = Pattern.compile("\"[^\"]+\"");
-        Matcher matcher = pattern.matcher(s);
-        List<String> list = new ArrayList<>();
-        while (matcher.find()) {
-            list.add(matcher.group());
+        Gson gson = new Gson();
+        String path = "/home/larry/nlp/xzqh-number.json";
+        List<String> strings = Files.newBufferedReader(Paths.get(path)).lines().collect(Collectors.toList());
+        List<Province> provinces = strings.stream().map(s -> gson.fromJson(s, Province.class)).collect(Collectors.toList());
+        Map<Integer, String> numNameMap = new HashMap<>();
+        for (Province province : provinces) {
+            // digraph.addEdge(0, province.getNumber());
+            numNameMap.put(province.getNumber(), province.getName());
+            province.getCities().forEach(city -> {
+                numNameMap.put(city.getNumber(), city.getName());
+                city.getDistricts().forEach(district -> {
+                    numNameMap.put(district.getNumber(), district.getName());
+                    district.getStreets().forEach(street -> {
+                        numNameMap.put(street.getNumber(), street.getName());
+                        street.getVillages().forEach(village -> {
+                            numNameMap.put(village.getNumber(), village.getName());
+                        });
+                    });
+                });
+            });
         }
-        String store = "/home/larry/nlp/addrNumberMap.json";
-        System.out.println();
-        Map<Integer, String> nameMap = new HashMap<>();
-        for (int i = 0; i < list.size(); i++)
-            nameMap.put(i + 1, list.get(i));
-        return nameMap;
-        // Gson gson = new Gson();
-        //String mapStr = gson.toJson(nameMap);
-        //  Files.write(Paths.get(store), mapStr.getBytes(StandardCharsets.UTF_8));
+        return numNameMap;
     }
 
     public static void analysis(String addr) throws IOException {
         Digraph digraph = genDigraph();
         Map<Integer, String> numNameMap = genNumberMap();
-        Trie<String> xzqhTrie = generacteTrie();
+        Trie xzqhTrie = generacteTrie();
         DirectedDFS dfs = new DirectedDFS(digraph, 0);
         String prefix;
         String leftAddr = addr;
@@ -59,8 +61,10 @@ public class AdderessAnalyzer {
             String name = xzqhTrie.get(prefix);
             int number = -1;
             for (Map.Entry<Integer, String> entry : numNameMap.entrySet())
-                if (entry.getValue().equals(name))
+                if (entry.getValue().equals(name)) {
                     number = entry.getKey();
+                    break;
+                }
             if (pc.contains(number)) {
                 objects.add(name);
                 leftAddr = leftAddr.substring(prefix.length());
@@ -106,13 +110,13 @@ public class AdderessAnalyzer {
 
 
     public static void main(String[] args) throws IOException {
-        String str = "福建省龙岩市长汀县铁长乡铁长村";
+        String str = "湖南省株洲县仙井龙凤冲";
         analysis(str);
     }
 
-    public static Trie<String> generacteTrie() throws IOException {
+    public static Trie generacteTrie() throws IOException {
 
-        Trie<String> trie = new Trie<>();
+        Trie trie = new Trie();
         //String addressc = address;
         String path = "/home/larry/nlp/xzqh-simple.json";
         //String numberPath = "/home/larry/nlp/addrNumberMap.json";
@@ -124,23 +128,29 @@ public class AdderessAnalyzer {
         Matcher matcher = pattern.matcher(xzqh);
         while (matcher.find()) {
             String str = matcher.group();
-            //  System.out.println("add address name to trie :" + str);
             trie.put(str, str);
-            if (str.endsWith("省") || str.endsWith("市") || str.endsWith("区") || str.endsWith("县")) {
+            if (str.endsWith("省") || str.endsWith("市") || str.endsWith("区") || str.endsWith("县") || str.endsWith("乡")||str.endsWith("村")) {
                 String simpleName = str.substring(0, str.length() - 1);
-                trie.put(simpleName, str);
+                if (!simpleName.isEmpty() && trie.get(simpleName) == null)
+                    trie.put(simpleName, str);
             }
             if (str.endsWith("村委会")) {
                 String simpleName = str.substring(0, str.length() - 2);
-                trie.put(simpleName, str);
+                if (!simpleName.isEmpty() && trie.get(simpleName) == null)
+                    trie.put(simpleName, str);
+                String simpleName2 = str.substring(0, str.length() - 3);
+                if (!simpleName2.isEmpty() && trie.get(simpleName2) == null)
+                    trie.put(simpleName2, str);
             }
             if (str.endsWith("社区居委会")) {
                 String simpleName = str.substring(0, str.length() - 5);
-                trie.put(simpleName, str);
+                if (!simpleName.isEmpty() && trie.get(simpleName) == null)
+                    trie.put(simpleName, str);
             }
             if (str.endsWith("居委会")) {
                 String simpleName = str.substring(0, str.length() - 3);
-                trie.put(simpleName, str);
+                if (!simpleName.isEmpty() && trie.get(simpleName) == null)
+                    trie.put(simpleName, str);
             }
 
         }

@@ -5,14 +5,12 @@ import java.util.Map;
 
 public class Trie {
 
-
     private Node root;
 
     private static class Node {
         private String val;
         private Map<Character, Node> next = new HashMap<>();
     }
-
 
     public void put(String key, String val) {
         root = put(root, key, 0, val);
@@ -29,6 +27,18 @@ public class Trie {
         return x;
     }
 
+    public String get(String key){
+       Node x = get(root, key, 0);
+        if(x == null) return null;
+        return x.val;
+    }
+
+    private Node get(Node x, String key, int d){
+        if(x == null) return null;
+        if(d == key.length()) return x;
+        char c = key.charAt(d);
+        return get(x.next.get(c), key, d+1);
+    }
 
     public String longestPrefixOf(String s) {
         int len = search(root, s, 0, 0);

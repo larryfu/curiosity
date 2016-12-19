@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.larry</groupId>
-    <artifactId>leaning</artifactId>
+    <artifactId>learning</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>news-classify</module>
-        <module>parser</module>
         <module>resumeParser</module>
+        <module>nlp</module>
     </modules>
 
 

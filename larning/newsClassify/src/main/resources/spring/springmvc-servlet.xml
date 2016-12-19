@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <!--<context:component-scan base-package="com.facishare.search.enterprise.controller"/>-->
+    <!-- 默认的注解映射支持 -->
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                        <property name="featuresToEnable">
+                            <array>
+                                <util:constant
+                                        static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_ENUMS_USING_INDEX"/>
+                            </array>
+                        </property>
+                        <property name="featuresToDisable">
+                            <array>
+                                <util:constant
+                                        static-field="com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES"/>
+                                <util:constant
+                                        static-field="com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS"/>
+                            </array>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <!-- <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/> -->
+
+
+    <!-- annotation默认的方法映射适配器  -->
+    <bean id="annotationMapping"
+          class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+    <bean id="annotationAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <!--<property name="mediaTypes">-->
+        <!--<map>-->
+        <!--<entry key="atom" value="application/atom+xml"/>-->
+        <!--<entry key="html" value="text/html"/>-->
+        <!--<entry key="json" value="application/json"/>-->
+        <!--</map>-->
+        <!--</property>-->
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/"/>
+                    <property name="suffix" value=".jsp"/>
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </list>
+        </property>
+    </bean>
+
+
+    <!-- 对静态资源文件的访问 -->
+    <!--配置view -->
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding">
+            <value>UTF-8</value>
+        </property>
+        <property name="maxUploadSize">
+            <value>32505856</value>
+            <!-- 上传文件大小限制为31M，31*1024*1024 -->
+        </property>
+        <property name="maxInMemorySize">
+            <value>4096</value>
+        </property>
+    </bean>
+
+
+    <!-- 配置全局异常处理 -->
+    <bean id="exceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+
+        <!--<property name="defaultErrorView">-->
+        <!--<value>/error/500.html</value>-->
+        <!--</property>-->
+        <!--<property name="defaultStatusCode">-->
+        <!--<value>500</value>-->
+        <!--</property>-->
+        <property name="warnLogCategory">
+            <value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver
+            </value>
+        </property>
+    </bean>
+
+</beans>

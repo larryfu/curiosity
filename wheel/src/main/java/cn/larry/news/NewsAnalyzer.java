@@ -1,4 +1,4 @@
-//package cn.larry.analyzer;
+//package cn.larry.nlp.analyzer;
 //
 //import java.io.File;
 //import java.io.FileInputStream;

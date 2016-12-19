@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <context:annotation-config/>
+    <!--<context:component-scan base-package="com.facishare.search.enterprise"/>-->
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:data-access.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--<bean id="indexService" class="com.facishare.search.enterprise.service.impl.IndexServiceImpl"></bean>-->
+
+    <!--<task:scheduled-tasks>-->
+    <!--<task:scheduled ref="indexService" method="updateCompany" cron="${scheduleCron}"/>-->
+    <!--</task:scheduled-tasks>-->
+    <!--tomcat jdbc pool数据源配置-->
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="poolProperties">
+            <bean class="org.apache.tomcat.jdbc.pool.PoolProperties"
+                  p:driverClassName="${driverClassName}"
+                  p:url="${url}"
+                  p:username="${username}"
+                  p:password="${password}"
+                  p:jmxEnabled="true"
+                  p:testWhileIdle="true"
+                  p:testOnBorrow="true"
+                  p:testOnReturn="false"
+                  p:validationInterval="30000"
+                  p:validationQuery="SELECT 1"
+                  p:timeBetweenEvictionRunsMillis="30000"
+                  p:maxActive="100"
+                  p:initialSize="10"
+                  p:maxWait="10000"
+                  p:minEvictableIdleTimeMillis="30000"
+                  p:minIdle="10"
+                  p:logAbandoned="false"
+                  p:removeAbandoned="true"
+                  p:removeAbandonedTimeout="60"
+                  p:jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"/>
+        </property>
+    </bean>
+
+    <bean id="sqlSessionFactory" name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:mapperLocations="classpath*:mybatis/*-mapper.xml"
+          p:configLocation="classpath:mybatis/mybatis-config.xml">
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.facishare.search.company.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+</beans>

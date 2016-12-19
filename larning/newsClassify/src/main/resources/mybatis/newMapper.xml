@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.larry.ml.news.data.NewsDao">
+
+    <select id="selectCompanyProfile" resultType="com.facishare.search.enterprise.model.CompanyInfo">
+        select * from company_profile  where id = #{id}
+    </select>
+
+    <select id="selectCompanies" resultType="com.facishare.search.enterprise.model.CompanyInfo">
+        select * from company_profile  limit #{start},#{end}
+    </select>
+
+    <select id="getCompanyNumber" resultType="int">
+        SELECT COUNT(*) FROM company_profile ;
+    </select>
+
+    <select id="selectCompanyId" resultType="int">
+        SELECT id FROM company_profile;
+    </select>
+
+</mapper>

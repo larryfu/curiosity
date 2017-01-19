@@ -70,7 +70,6 @@ public class Analyzer {
         int next = 0;
         for (int i = 0; i < current.size(); i++) {
             next = current.get(i).getLower();
-
             if (next - currentIndex > 1) {
                 for (int j = currentIndex + 1; j < next; j++) {
                     intervals.add(new Interval(j, j));
@@ -84,7 +83,6 @@ public class Analyzer {
 
     private static List<Interval> getSameLevel(List<Interval> intervals, Interval interval) {
         return intervals.stream()
-                //  .filter(in -> in.getLower() == interval.getLower())
                 .filter(in -> in.getLower() >= interval.getLower() && interval.intersection(in) != null)
                 .collect(Collectors.toList());
     }

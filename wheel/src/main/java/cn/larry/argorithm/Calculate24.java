@@ -3,7 +3,7 @@ package cn.larry.argorithm;
 import java.util.*;
 
 /**
- * 速算24 ，速算任意值，支持任意个数字，任意种运算符，
+ * 速算24 ，支持算任意值，支持任意个数字，任意种运算符，
  * 暴力搜索所有组合
  */
 public class Calculate24 {

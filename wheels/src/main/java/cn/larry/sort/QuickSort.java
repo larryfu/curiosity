@@ -19,7 +19,7 @@ public class QuickSort {
         if (start >= end) return;
         int num = nums[start];
         int j = end;
-        for (int i = start + 1; i < j; ) {
+        for (int i = start ; i < j; ) {
             while (nums[i] <= num && i < end) i++;
             while (nums[j] >= num && j > start) j--;
             if (i < j) swap(nums, i, j);

@@ -31,13 +31,7 @@
             <artifactId>jsoup</artifactId>
             <version>1.8.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.welta</groupId>
-            <artifactId>analyzer</artifactId>
-            <version>2012</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/IKAnalyzer2012FF_u1.jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
@@ -73,7 +67,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.9.final</version>
+            <version>4.1.44.Final</version>
         </dependency>
 
 

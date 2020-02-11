@@ -11,6 +11,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
     	System.out.println(ctx.channel().remoteAddress()+"->Server :"+ msg.toString());
+        System.out.println("thread "+Thread.currentThread().getName());
         ctx.write(msg); // (1)
         ctx.flush(); // (2)
     }

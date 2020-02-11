@@ -2,6 +2,7 @@ package cn.larry.graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * 有向图
@@ -13,6 +14,8 @@ public class Digraph {
     private List<Integer>[] adj; //以顶点为下标的边的邻接表
 
     public Digraph(int V) {
+
+
         this.V = V;
         this.E = 0;
         adj =new ArrayList[V];

@@ -17,10 +17,16 @@ public class SyncTimeServer {
             System.out.println("the time server start at :" + port);
             Socket socket = null;
             while (true) {
-                socket = server.accept();
-                new Thread(new SyncTimeServerHandler(socket)).start();
+                try{
+                    socket = server.accept();
+                    new Thread(new SyncTimeServerHandler(socket)).start();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
-        } finally {
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally{
             if (server != null) {
                 System.out.println("server close");
                 server.close();

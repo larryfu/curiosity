@@ -9,11 +9,35 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
+import java.net.StandardSocketOptions;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class TimeClient {
 
+
+    static final ExecutorService executorService  = Executors.newFixedThreadPool(100);
+
 	public static void main(String[] args) throws Exception {
+        long start= System.currentTimeMillis();
+        int num = 100;
+        CountDownLatch latch = new CountDownLatch(num);
+	    for(int i=0;i<num;i++){
+	        executorService.submit(()->{
+                execute(latch);
+            });
+        }
+	    latch.await();
+
+	    long end = System.currentTimeMillis();
+        System.out.println("cost :"+(end-start));
 		
-		String host = "127.0.0.1";// args[0];
+
+	}
+	private static void execute(CountDownLatch latch){
+        String host = "127.0.0.1";// args[0];
         int port = 8080;//Integer.parseInt(args[1]);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -28,14 +52,21 @@ public class TimeClient {
                     ch.pipeline().addLast(new TimeClientHandler());
                 }
             });
-
             // 启动客户端
-            ChannelFuture f = b.connect(host, port).sync(); // (5)
+            for(int i = 0;i<1000;i++){
+                try{
+                    ChannelFuture f = b.connect(host, port).sync(); // (5)
+                    // 等待连接关闭
+                    f.channel().closeFuture().sync();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            long end = System.currentTimeMillis();
 
-            // 等待连接关闭
-            f.channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();
         }
-	}
+        latch.countDown();
+    }
 }

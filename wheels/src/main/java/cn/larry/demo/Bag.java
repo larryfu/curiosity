@@ -16,6 +16,7 @@ public class Bag {
         items.add(new Item(4,11));
         items.add(new Item(3,6));
         System.out.println(maxValue(8,items));
+
     }
 
     /**

@@ -32,6 +32,11 @@ public class Sup {
     }
 }
 
+ class Person{
+    String name;
+   static String str;
+}
+
 class Sub extends Sup {
     byte tag = 1;
 

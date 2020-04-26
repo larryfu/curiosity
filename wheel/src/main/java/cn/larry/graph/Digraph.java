@@ -3,54 +3,39 @@ package cn.larry.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 有向图
- * Created by Thinkpad on 2015/12/6.
- */
 public class Digraph {
-    private int V;  //顶点总数
-    private int E;         //边总数
-    private List<Integer>[] adj; //以顶点为下标的边的邻接表
 
-    public Digraph() {
-    }
+    private int V; //节点数
 
-    public Digraph(int V) {
-        this.V = V;
-        this.E = 0;
-        adj = new ArrayList[V];
-        for (int v = 0; v < V; v++)
-            adj[v] = new ArrayList<>();
-    }
+    private List<Integer>[] adj; //与节点连接的点
 
-    public int V() {
+    private int E;
+
+    public int V(){
         return V;
     }
 
-    public int E() {
+    private int E(){
         return E;
     }
 
-    public void addEdge(int v, int w) {
-        adj[v].add(w);
+
+    public Digraph(int V){
+        this.V = V;
+        this.E = 0;
+        adj = new List[V];
+        for(int i = 0;i<V;i++){
+            adj[i] = new ArrayList<>();
+        }
+    }
+
+    public void addEdge(int s,int e){
+        adj[s].add(e);
         E++;
     }
 
-    public List<Integer> adj(int v) {
+    public List<Integer> adj(int v){
         return adj[v];
-    }
-
-    /**
-     * 翻转有向图
-     *
-     * @return
-     */
-    public Digraph reverse() {
-        Digraph R = new Digraph(V);
-        for (int v = 0; v < V; v++)
-            for (int w : adj(v))
-                R.addEdge(w, v);
-        return R;
     }
 
 }

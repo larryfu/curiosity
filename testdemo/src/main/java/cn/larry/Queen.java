@@ -17,17 +17,13 @@ public class Queen {
             List<List<Position>> positionList = solveQueen(i);
             if (positionList != null){
                 System.out.println(positionList.size());
-//            for (List<Position> positions : positionList){
-//                for (Position p : positions) {
-//                    System.out.print(p);
-//                }
-//                System.out.println();
-//            }
             }
         }
     }
 
     public static List<List<Position>> solveQueen(int n) {
+
+
         List<List<Position>> results = new ArrayList<>();
         Stack<Position> positions = new Stack<>();
             for (int i = 0; i < n; i++) { //i为横坐标

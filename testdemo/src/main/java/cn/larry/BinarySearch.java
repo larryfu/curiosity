@@ -1,10 +1,20 @@
 package cn.larry;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 public class BinarySearch {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int[] nums = new int[]{1, 3, 5, 6, 9};
-        System.out.println(binarySearch(nums, 6));
+        String s = "21";
+        List<String > stringList = new ArrayList<>();
+        InputStream inputStream ;
+        Class<String> stringClass = String.class;
+        System.out.println(binarySearch(nums, 7));
+        TimeUnit.SECONDS.sleep(1000);
     }
 
     private static int binarySearch(int[] nums, int n) {

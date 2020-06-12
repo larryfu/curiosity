@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/curiosity.iml" filepath="$PROJECT_DIR$/.idea/curiosity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scalademo/scalademo.iml" filepath="$PROJECT_DIR$/scalademo/scalademo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testdemo/test-demo.iml" filepath="$PROJECT_DIR$/testdemo/test-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wheels/wheel.iml" filepath="$PROJECT_DIR$/wheels/wheel.iml" />
+    </modules>
+  </component>
+</project>

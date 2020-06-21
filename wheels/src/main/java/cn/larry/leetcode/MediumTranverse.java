@@ -1,8 +1,6 @@
 package cn.larry.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 中序遍历二叉树，非递归
@@ -22,6 +20,31 @@ public class MediumTranverse {
             node = stack.pop();
             list.add(node.val);
             node = node.right;
+        }
+        return list;
+    }
+
+    public List<Integer> inorderTraversalOld(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        if(root == null) return list;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        Set<TreeNode> traversaled = new HashSet<>();
+        while(!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            if(node.left==null || traversaled.contains(node.left)){
+                list.add(node.val);
+                if(node.left==null &&  node.right!=null){
+                    stack.push(node.right);
+                }
+                traversaled.add(node);
+            }else{
+                if(node.right!=null){
+                    stack.push(node.right);
+                }
+                stack.push(node);
+                stack.push(node.left);
+            }
         }
         return list;
     }

@@ -20,6 +20,7 @@ public class LRUCache {
     private LinkedList<String> list;
 
     public String get(String key) {
+       // Arrays.so
         LinkedList.Node<String> node = cacheMap.get(key);
         if (node.pre != null) {
             node.pre.next = node.next;
@@ -41,6 +42,4 @@ public class LRUCache {
             //TODO 在map中移除
         }
     }
-
-
 }

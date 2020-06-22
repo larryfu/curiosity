@@ -37,7 +37,7 @@ public class FindSameParent {
         }
         if(node.leftChild !=null){
             path.add(node);
-          boolean  leftFind = findPath(node.leftChild,a,path);
+            boolean  leftFind = findPath(node.leftChild,a,path);
             if(!leftFind){
                 path.remove(path.size()-1);
             }else return true;

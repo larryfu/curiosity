@@ -1,5 +1,8 @@
 package cn.larry;
 
+/**
+ * 递归算法解皇后问题
+ */
 public class QueenRec {
 
 

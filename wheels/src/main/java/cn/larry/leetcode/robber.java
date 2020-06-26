@@ -8,7 +8,7 @@ package cn.larry.leetcode;
  *
  *
  */
-public class Robber{
+    public class robber{
     public int rob(int[] nums) {
         if(nums.length == 0) return 0;
         int[][] dp = new int[nums.length][2];

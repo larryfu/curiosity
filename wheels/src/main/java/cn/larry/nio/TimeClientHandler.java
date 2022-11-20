@@ -13,7 +13,7 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
         ByteBuf m = (ByteBuf) msg; // (1)
         try {
             long currentTimeMillis = (m.readUnsignedInt() - 2208988800L) * 1000L;
-            System.out.println(currentTimeMillis);
+            System.out.println(" Thread "+Thread.currentThread().getName()+" time :"+ currentTimeMillis);
             ctx.close();
         } finally {
             m.release();

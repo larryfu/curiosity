@@ -10,6 +10,7 @@ public class WaitNotifyTest {
     static Object o = new Object();
     static final ExecutorService service = new ThreadPoolExecutor(10,100,100, TimeUnit.SECONDS,new LinkedBlockingQueue<>());
     public static void main(String[] args) throws InterruptedException {
+        //Thread.currentThread()
         for(int i=0;i<5;i++)
             service.submit(()->{
                 //  synchronized (o){

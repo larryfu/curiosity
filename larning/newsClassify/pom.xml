@@ -12,7 +12,7 @@
     <artifactId>news-classify</artifactId>
 
     <properties>
-        <spring.version>4.3.1.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
         <lucene.version>6.1.0</lucene.version>
     </properties>
 

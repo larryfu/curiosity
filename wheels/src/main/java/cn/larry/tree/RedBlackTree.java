@@ -1,5 +1,8 @@
 package cn.larry.tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RedBlackTree<K extends Comparable<K>, V> {
 
     Node root;
@@ -79,7 +82,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
         }
         Node<K, V> parent = node.parent;
         while (parent != null) {
-            if(!parent.isRed){
+            if (!parent.isRed) {
 
             }
         }
@@ -90,11 +93,124 @@ public class RedBlackTree<K extends Comparable<K>, V> {
             node1.leftChild = null;
         }
 
-        //处在三节点中
-        if (node.isRed || node.leftChild != null && node.leftChild.isRed) {
-
+        Node<K, V> bigNear = node.rightChild;
+        if (bigNear != null) {
+            while (bigNear.leftChild != null) {
+                bigNear = bigNear.leftChild;
+            }
+        }
+        if (bigNear == null) {
+            bigNear = node;
         }
 
+        //将三个单节点节点合并为4节点
+        List<Node<K, V>> nodes = new ArrayList<>();
+        while (isMergeable4Node(bigNear)) {
+            nodes.add(bigNear);
+            bigNear = bigNear.parent;
+        }
+        for (int i = nodes.size() - 1; i >= 0; i--) {
+            Node<K, V> node1 = nodes.get(i);
+            if (isMergeable4Node(node1)) {
+                merge24Node(node1);
+            }
+        }
+
+        //将大于key的最小node删除
+        deleteLeafNonSingleNode(bigNear);
+        node.key = bigNear.key;
+        node.value = bigNear.value;
+
+
+        decompose4node(bigNear.rightChild != null ? bigNear.rightChild : bigNear.parent);
+
+        return node;
+
+    }
+
+    //删除叶子节点，且无需合并单节点
+    public void deleteLeafNonSingleNode(Node<K, V> node) {
+        if (node.root) {
+            root = null;
+            return;
+        }
+        if (node.isRed) {
+            node.parent.leftChild = null;
+            return;
+        }
+        Node<K, V> brother = getBrother(node);
+
+        if (brother.leftChild != null && brother.leftChild.isRed) {
+            //是左子节点
+            if (node.parent.leftChild == node) {
+                node.key = node.parent.key;
+                node.value = node.parent.value;
+                node.parent.key = brother.leftChild.key;
+                node.parent.value = brother.leftChild.value;
+                brother.leftChild = null;
+                return;
+            } else {
+                node.key = node.parent.key;
+                node.value = node.parent.value;
+                node.parent.key = brother.key;
+                node.parent.value = brother.value;
+                brother.key = brother.leftChild.key;
+                brother.value = brother.leftChild.value;
+                brother.leftChild = null;
+                return;
+            }
+        }
+        if (node.parent.isRed) {
+            node.key = node.parent.key;
+            node.value = node.parent.value;
+            node.parent.key = brother.key;
+            node.parent.value = brother.value;
+            node.parent.rightChild = null;
+            node.isRed = true;
+            return;
+        }
+        //是三个单节点
+        throw new IllegalArgumentException("pure single node");
+    }
+
+    //向上分解四节点
+    public void decompose4node(Node<K, V> node) {
+
+    }
+
+    private boolean isMergeable4Node(Node<K, V> node) {
+        if (node.isRed) {
+            return false;
+        }
+        if (node.leftChild != null && node.leftChild.isRed) {
+            return false;
+        }
+        if (node.parent == null || node.parent.isRed) {
+            return false;
+        }
+        Node<K, V> brother = getBrother(node);
+        if (brother == null || brother.isRed) {
+            return false;
+        }
+        if (brother.leftChild != null && brother.leftChild.isRed) {
+            return false;
+        }
+        return true;
+    }
+
+    private void merge24Node(Node<K, V> node) {
+
+    }
+
+    public Node<K, V> getBrother(Node<K, V> node) {
+        if (node == null || node.parent == null) {
+            return null;
+        }
+        if (node.parent.leftChild == node) {
+            return node.parent.rightChild;
+        } else {
+            return node.leftChild;
+        }
     }
 
     public Node<K, V> rotateLeft(Node node) {
@@ -123,7 +239,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     static class Node<K extends Comparable<K>, V> {
         K key;
         V value;
-        Node parent;
+        Node<K, V> parent;
         boolean root;
         Node<K, V> leftChild;
         Node<K, V> rightChild;

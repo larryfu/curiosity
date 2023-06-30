@@ -11,11 +11,11 @@ public class LogicExpressionLexer {
 
 
     private static boolean isVarCharStart(char c) {
-        return c > 'a' && c < 'z' || c > 'A' && c < 'Z' || c == '_';
+        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_';
     }
 
     private static boolean isVarChar(char c) {
-        return isVarCharStart(c) || c > '0' && c < '9';
+        return isVarCharStart(c) || c >= '0' && c <= '9';
     }
 
 

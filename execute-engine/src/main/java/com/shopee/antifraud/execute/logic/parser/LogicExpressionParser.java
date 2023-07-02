@@ -12,8 +12,10 @@ public class LogicExpressionParser {
 
 
     public static void main(String[] args) {
-        String expr = "( g6_f2 ||  g6_f3 ||  g6_f4  ||  g6_f1) && (g2_f1 || g2_f2 || g2_f3 ) && g5_f2   && ! g12_f1_C0007 && ! g12_f2_C0007";
+        //  String expr = "( g6_f2 ||  g6_f3 ||  g6_f4  ||  g6_f1) && (g2_f1 || g2_f2 || g2_f3 ) && g5_f2   && ! g12_f1_C0007 && ! g12_f2_C0007";
+        String expr = "a && b && e || c && d";
         LogicExpression le = parse(expr);
+        LogicExprOptimizer.plainExpr(le);
         System.out.println(le.getExpression());
         System.out.println("finished");
     }

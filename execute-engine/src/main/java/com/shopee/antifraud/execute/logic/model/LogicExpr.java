@@ -1,5 +1,6 @@
 package com.shopee.antifraud.execute.logic.model;
 
+
 import com.shopee.antifraud.execute.logic.parser.LogicExpressionParser;
 
 import java.util.List;
@@ -24,5 +25,6 @@ public class LogicExpr {
     public void generateCalculateStep(Map<String,Integer> costMap,Map<String,Integer> probMap){
         root.calculateCost(costMap);
         root.calculateTruePercent(probMap);
+        this.calculateSequence = root.
     }
 }

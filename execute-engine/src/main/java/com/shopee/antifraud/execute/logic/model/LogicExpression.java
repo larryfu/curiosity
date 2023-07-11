@@ -118,7 +118,7 @@ public class LogicExpression {
         if (opType == OpType.OR) {
             for (LogicExpression le : getSubExpr()) {
                 boolean value = le.calculate(calculator);
-                if (value == true) {
+                if (value) {
                     return true;
                 }
             }
@@ -127,62 +127,8 @@ public class LogicExpression {
         throw new IllegalArgumentException("optype illegal");
     }
 
-
     boolean isLeaf() {
         return subExpr == null || subExpr.isEmpty();
-    }
-
-
-    public int calculateCost(Map<String, Integer> costMap) {
-        int cost = doCalculateCost(costMap);
-        this.weightCost = cost;
-        return cost;
-    }
-
-    public int doCalculateCost(Map<String, Integer> costMap) {
-        if (getSubExpr() == null || getSubExpr().isEmpty()) {
-            return costMap.get(getExpression());
-        } else {
-            int cost = 0;
-            for (LogicExpression le : getSubExpr()) {
-                cost += le.calculateCost(costMap);
-            }
-            return cost;
-        }
-    }
-
-    public int calculateTruePercent(Map<String, Integer> probMap) {
-        int per = doCalculateTruePercent(probMap);
-        this.truePercent = per;
-        return per;
-    }
-
-    private int doCalculateTruePercent(Map<String, Integer> probMap) {
-        if (getSubExpr() == null || getSubExpr().isEmpty()) {
-            return probMap.get(getExpression());
-        } else {
-            int per = 100;
-            if (opType == OpType.AND) {
-                for (LogicExpression le : getSubExpr()) {
-                    per *= le.calculateTruePercent(probMap);
-                    per = per / 100;
-                }
-            } else if (opType == OpType.NOT) {
-                for (LogicExpression le : getSubExpr()) {
-                    per *= le.calculateTruePercent(probMap);
-                    per = per / 100;
-                }
-                return 100 - per;
-            } else {
-                for (LogicExpression le : getSubExpr()) {
-                    //乘以为false的概率
-                    per *= (100 - le.calculateTruePercent(probMap));
-                    per = per / 100;
-                }
-                return 100 - per;
-            }
-            return per;
-        }
     }
 
     public int getWeightCost() {

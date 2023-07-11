@@ -41,7 +41,6 @@ public class LogicExpressionParser {
             }
             if (token.getTokenType() == TokenType.VAR) {
                 LogicExpression logicExpression = new LogicExpression();
-                logicExpression.setLeaf(true);
                 logicExpression.setExpression(token.getText());
                 //处理not运算
                 if (!operatorStack.isEmpty() && operatorStack.peek().getTokenType() == TokenType.NOT) {

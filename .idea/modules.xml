@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/curiosity.iml" filepath="$PROJECT_DIR$/.idea/curiosity.iml" />
-      <module fileurl="file://$PROJECT_DIR$/execute-engine/execute-engine.iml" filepath="$PROJECT_DIR$/execute-engine/execute-engine.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wheels/wheel.iml" filepath="$PROJECT_DIR$/wheels/wheel.iml" />
     </modules>
   </component>
 </project>

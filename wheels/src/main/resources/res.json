@@ -1,0 +1,29 @@
+{
+  "_content": b
+  "<html>\r\n<head><title>404 Not Found</title></head>\r\n<body>\r\n<center><h1>404 Not Found</h1></center>\r\n<hr><center>TLB</center>\r\n</body>\r\n</html>\r\n",
+  "_content_consumed": True,
+  "_next": None,
+  "status_code": 404,
+  "headers": {
+    "Date": "Mon, 15 Jan 2024 13:04:12 GMT",
+    "Content-Type": "text/html",
+    "Content-Length": "144",
+    "Connection": "keep-alive",
+    "Proxy-Status": "0000201404060102",
+    "Timing-Allow-Origin": "*",
+    "x-tt-trace-host": "01e1dce8aeb59b9bba70147ac99daeb6f868e1c483957ee4b70523422fda7de0dafe91af16854b75ef265195d68a9323ef2a78db75833d4198acf26eb93ec4850dd38ae80c973c0a439bdf4c21869f0e44",
+    "x-tt-trace-tag": "id=00;cdn-cache=miss",
+    "x-tt-trace-id": "00-240115210412544B79760A995813DA2B-032D11FD63D45AC9-00",
+    "Server": "TLB",
+    "X-TT-LOGID": "20240115210412544B79760A995813DA2B"
+  },
+  "raw": <urllib3.response.HTTPResponse
+  object
+  at
+  0x7fe510104a20>,
+  "url": "https://aplus-pre.bytedance.net/api/v1/inner/swipecard/partner/bylastesttime",
+  "encoding": "ISO-8859-1",
+  "history": [],
+  "reason": "Not Found",
+  "cookies": <RequestsCookieJar[]>, "elapsed": datetime.timedelta(microseconds=107589), "request": <PreparedRequest [GET]>, "connection": <requests.adapters.HTTPAdapter object at 0x7fe510104eb8>
+}
